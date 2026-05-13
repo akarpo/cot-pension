@@ -441,7 +441,29 @@
 </section>
 
 <section>
-  <h2><span class="num">§ 04</span>Reading the numbers</h2>
+  <h2><span class="num">§ 04</span>What the trust paid to managers</h2>
+  <div class="section-rule"></div>
+  <p class="intro">Beginning with FY2015, the City of Troy ACFR discloses pension trust investment expense as a separate line on the Statement of Changes in Fiduciary Net Position. Across the eleven years on the public record, the trust paid <strong>$5.04 million</strong> in directly invoiced management expense. This is a floor, not a ceiling — see methodology below.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fiscal Year</th>
+          <th>Pension trust investment expense</th>
+        </tr>
+      </thead>
+      <tbody id="feesTable"></tbody>
+    </table>
+  </div>
+
+  <p style="margin-top: 24px;"><strong style="font-weight: 500;">What's not in this $5.04M number.</strong> The disclosed line captures fees invoiced directly to the trust — typically the investment consultant retainer and a portion of separate-account manager fees. It does not capture <em>embedded</em> fees: mutual fund expense ratios netted into NAV, private equity "2 and 20" management fees and carried interest taken out at the fund level, and real estate fund-level fees. A reasonable all-in estimate for Troy's actual asset mix (≈60% equity, 26% fixed income, 5% private equity, 2% real estate) sits around <strong>50–80 basis points</strong> a year — implying <strong>$17–30M</strong> in all-in fees over the full 17-year window, of which only about $5–7M is visible on the face of the ACFRs.</p>
+
+  <p>FY2008–FY2014 are excluded from the table because the ACFRs for those years do not break investment expense out as a separate line; it is netted within reported investment income. Applying the observed FY2015–FY2025 effective rate (≈20–25 bps) to those years' beginning pension assets implies an additional ~$1.5–1.8M of directly invoiced fees — bringing the conservative 17-year directly-invoiced total to roughly <strong>$6.5–7M</strong>.</p>
+</section>
+
+<section>
+  <h2><span class="num">§ 05</span>Reading the numbers</h2>
   <div class="section-rule"></div>
 
   <div class="callout">
@@ -671,6 +693,19 @@ PENSION_DATA.annual.forEach(row => {
   tbody.appendChild(tr);
   prevFy = row.fy;
 });
+
+const feesTbody = document.getElementById('feesTable');
+const feeFmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+PENSION_DATA.fees.annual.forEach(row => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td>FY' + row.fy + '</td><td>' + feeFmt.format(row.expense) + '</td>';
+  feesTbody.appendChild(tr);
+});
+const totalRow = document.createElement('tr');
+totalRow.style.fontWeight = '500';
+totalRow.style.borderTop = '2px solid var(--ink)';
+totalRow.innerHTML = '<td>11-year total (FY2015–FY2025)</td><td>' + feeFmt.format(PENSION_DATA.fees.disclosed_total_fy15_fy25) + '</td>';
+feesTbody.appendChild(totalRow);
 </script>
 
 </body>

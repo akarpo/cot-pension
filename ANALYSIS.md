@@ -108,6 +108,52 @@ The 5% private equity allocation and 2% real estate allocation are the most expe
 
 The municipal bond holdings specifically deserve scrutiny on these grounds: their yields are tax-advantaged for individual investors but offer no tax benefit to a tax-exempt pension trust. To justify owning them inside a pension, the yield would need to clear a much higher hurdle than it does — high enough to offset the opportunity cost of not being in equities. It does not.
 
+### Disclosed management fees, FY2015–FY2025
+
+Beginning with fiscal year 2015, the City of Troy ACFR breaks investment expense out as a discrete line on the *Statement of Changes in Fiduciary Net Position* for the Employees' Retirement System. Eleven years of disclosure are now on the public record:
+
+| Fiscal Year | Pension trust investment expense |
+|---:|---:|
+| FY2015 | $315,083 |
+| FY2016 | $415,732 |
+| FY2017 | $341,260 |
+| FY2018 | $461,309 |
+| FY2019 | $462,681 |
+| FY2020 | $288,316 |
+| FY2021 | $500,458 |
+| FY2022 | $473,172 |
+| FY2023 | $549,727 |
+| FY2024 | $609,069 |
+| FY2025 | $620,775 |
+| **11-year total** | **$5,037,582** |
+
+Over this eleven-year window the trust paid approximately **$5.0M in directly invoiced investment management expense** — averaging ~$458K per year and rising as assets grew from ~$190M to ~$237M. The implied effective fee rate sits around **20–28 basis points** of beginning assets across the period.
+
+For FY2008–FY2014 the ACFRs do not break investment expense out as a separate line; it is netted within "Net adjustment in fair value of investments." Applying the observed ~20 bps rate to those years' beginning pension trust assets yields an estimated additional **$1.5–1.8M** of management expense across the seven-year pre-disclosure period — bringing a conservative 17-year cumulative total to roughly **$6.5–7M of directly invoiced fees**.
+
+### Why that $5–7M number is a floor, not a ceiling
+
+The disclosed "investment expense" line captures fees that are **invoiced directly to the trust** — typically the investment consultant's retainer and a portion of separate-account manager fees. It does **not** capture:
+
+- **Embedded mutual fund expense ratios.** Fees on commingled and pooled equity / fixed-income funds are netted into reported NAV and never surface as a line item in the ACFR.
+- **Private equity management fees and carried interest.** Troy's ~5% private equity sleeve operates under "2 and 20"-style economics — typically a 1.5–2% annual management fee plus 20% carry on profits — all of which is taken out at the fund level before any return reaches the trust.
+- **Real estate fund-level fees.** The ~2% real estate allocation pays property and asset management fees inside the fund structures.
+- **Custody, audit, and certain consultant retainers** that are sometimes classified under "Administrative expenses" rather than investment expense.
+
+A reasonable all-in fee estimate for Troy's actual mix — roughly 60% equities, 26% fixed income, 5% private equity, 2% real estate, balance cash — is in the range of **50–80 basis points** annually. Applied to the trust's average asset base of ~$200M, the all-in fee load over the full 17 years is plausibly in the **$17–30M** range, of which only ~$5–7M is visible on the ACFRs' face. The remainder is paid out of gross investment returns before the net number is reported, and is therefore invisible in the published statements.
+
+### Putting fees alongside the opportunity cost
+
+The two numbers measure different things and stack:
+
+| | 17-year cumulative (approx.) |
+|---|---:|
+| **Opportunity cost vs. S&P 500 TR** (foregone investment earnings on the trust's average asset base) | **tens of millions of dollars** |
+| **Directly invoiced management fees** (ACFR disclosure, plus pre-2015 estimate) | **$5–7M** |
+| **All-in management fees including embedded PE/RE/MF fees** (estimated) | **$17–30M** |
+
+The opportunity cost is what the beneficiaries and taxpayers gave up by holding a diversified mix in an overfunded closed plan; the fee total is what they paid to the intermediaries who manage that diversification. Both move the same direction and reinforce the same conclusion: the current allocation transfers wealth from the trust to the firms that manage its non-equity sleeves, and the conventional fiduciary-prudence defense does not justify that transfer for a plan with the City of Troy's funded ratio.
+
 ### Where the 2008–2009 outperformance went
 
 The defense of the current allocation often points to FY2008 and FY2009, when Troy's diversified mix beat a 100% equity benchmark by 13–18 percentage points. That outperformance was real — and was paid back with interest. The two crisis years bought roughly 21 pp of cumulative relative outperformance; the following fifteen years gave back roughly 60 pp of cumulative relative underperformance. **The net effect of the diversification across the full 17-year window is sharply negative.** The bond-cushion story is a story about two years, not seventeen.

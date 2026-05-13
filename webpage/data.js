@@ -73,5 +73,26 @@ const PENSION_DATA = {
     "sp500_cumulative_pct": 348.68,
     "troy_annualized_pct": 7.03,
     "sp500_annualized_pct": 9.23
+  },
+  "fees": {
+    "note": "Pension trust investment expense as separately disclosed on the Statement of Changes in Fiduciary Net Position. FY2008-FY2014 ACFRs do not break this line out; pre-2015 expense is netted within investment income. Embedded mutual fund, private equity, and real estate fund-level fees are netted into reported NAV and not shown here.",
+    "annual": [
+      { "fy": 2015, "expense": 315083 },
+      { "fy": 2016, "expense": 415732 },
+      { "fy": 2017, "expense": 341260 },
+      { "fy": 2018, "expense": 461309 },
+      { "fy": 2019, "expense": 462681 },
+      { "fy": 2020, "expense": 288316 },
+      { "fy": 2021, "expense": 500458 },
+      { "fy": 2022, "expense": 473172 },
+      { "fy": 2023, "expense": 549727 },
+      { "fy": 2024, "expense": 609069 },
+      { "fy": 2025, "expense": 620775 }
+    ],
+    "disclosed_total_fy15_fy25": 5037582,
+    "estimated_pre_2015_low": 1500000,
+    "estimated_pre_2015_high": 1800000,
+    "all_in_estimate_low": 17000000,
+    "all_in_estimate_high": 30000000
   }
 };
