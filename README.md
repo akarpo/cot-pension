@@ -24,7 +24,7 @@ Independent analysis of the City of Troy, Michigan Employees Retirement System i
 | S&P 500 Total Return | **9.23%** |
 | Gap | −2.20 pp |
 
-Troy's pension is **152% funded** as of FY2025 and is among the best-funded municipal plans in Michigan. The performance gap vs. the S&P is the expected result of a diversified pension portfolio holding bonds, real estate, and private equity alongside stocks. A 60/40 portfolio would be a fairer benchmark.
+Troy's pension is **152% funded** as of FY2025 and is among the best-funded municipal plans in Michigan. That overcapitalization sharpens the finding: the fund has trailed the S&P 500 by **2.20 pp annualized over 17 years** — fifteen of those years consecutive — for a plan that needed neither the volatility dampening nor the higher expected returns its bond and alternatives sleeves were ostensibly there to provide. The compounded opportunity cost runs into the tens of millions of dollars.
 
 ## Working with this in Claude Code
 
