@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City of Troy Pension Performance vs. S&amp;P 500 · FY2008–FY2025</title>
+<meta name="description" content="A 17-year analysis of the City of Troy, Michigan Employees Retirement System investment performance compared to the S&P 500 Total Return Index.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f1e8;
+    --paper: #faf7ee;
+    --ink: #1a1814;
+    --ink-soft: #4a463e;
+    --ink-faint: #8a857a;
+    --rule: #d9d2c1;
+    --accent: #b8431f;
+    --accent-soft: #e5b8a8;
+    --positive: #2d5a3e;
+    --negative: #b8431f;
+    --grid: #e8e1cf;
+    --sp-color: #c9a227;
+    --troy-color: #1f4068;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(139, 130, 100, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(139, 130, 100, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+  header.masthead {
+    border-bottom: 2px solid var(--ink);
+    padding: 32px 0 16px;
+    margin-bottom: 48px;
+  }
+  .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+  }
+  .kicker .vol { color: var(--accent); }
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    font-variation-settings: "opsz" 144;
+  }
+  h1.title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-soft);
+    max-width: 640px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .byline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 24px;
+  }
+  .lead {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 56px;
+  }
+  .lead::first-letter {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 76px;
+    line-height: 0.8;
+    float: left;
+    margin: 8px 12px 0 0;
+    color: var(--accent);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 64px;
+  }
+  .stat {
+    padding: 20px 16px;
+    border-right: 1px solid var(--rule);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .stat-value {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-value.neg { color: var(--negative); }
+  .stat-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 6px;
+  }
+  section { margin-bottom: 72px; }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  h2 .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 400;
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .section-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--ink);
+    margin: 16px 0 24px;
+  }
+  p { margin-bottom: 18px; max-width: 680px; }
+  p.intro { font-size: 18px; color: var(--ink-soft); }
+  .chart-wrap {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 28px 24px 20px;
+    margin: 32px 0;
+    position: relative;
+  }
+  .chart-title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .chart-subtitle {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-mark {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+  }
+  .legend-mark.troy { background: var(--troy-color); }
+  .legend-mark.sp {
+    background: var(--sp-color);
+    height: 4px;
+    border-radius: 1px;
+  }
+  .chart-canvas-wrap {
+    position: relative;
+    height: 360px;
+    width: 100%;
+  }
+  .chart-note {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-faint);
+    margin-top: 14px;
+    line-height: 1.5;
+    border-top: 1px solid var(--rule);
+    padding-top: 12px;
+  }
+  .growth-wrap .chart-canvas-wrap { height: 380px; }
+  .table-wrap {
+    margin: 32px 0;
+    overflow-x: auto;
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    font-weight: 500;
+    text-align: right;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--ink);
+  }
+  thead th:first-child { text-align: left; }
+  tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+    text-align: right;
+  }
+  tbody td:first-child {
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--ink-soft);
+  }
+  tbody tr:hover { background: rgba(184, 67, 31, 0.04); }
+  td.pos { color: var(--positive); }
+  td.neg { color: var(--negative); }
+  td.diff-pos::before { content: '▲ '; font-size: 9px; vertical-align: 2px; }
+  td.diff-neg::before { content: '▼ '; font-size: 9px; vertical-align: 2px; }
+  tr.gap-row td {
+    background: var(--paper);
+    font-style: italic;
+    color: var(--ink-faint);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+  }
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--accent);
+    padding: 24px 28px;
+    margin: 32px 0;
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .callout strong {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .context-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .context-card p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  footer {
+    border-top: 2px solid var(--ink);
+    padding: 32px 0 64px;
+    margin-top: 64px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+  footer p { max-width: 100%; font-size: 11px; margin-bottom: 12px; }
+  footer a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  footer a:hover { background: var(--accent-soft); }
+  @media (max-width: 700px) {
+    .container { padding: 0 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
+    .context-grid { grid-template-columns: 1fr; gap: 24px; }
+    .lead { font-size: 19px; padding: 24px 0; }
+    .lead::first-letter { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="masthead">
+  <div class="kicker">
+    <span class="vol">VOL. I · ED. 1</span>
+    <span>FY2008 — FY2025</span>
+  </div>
+  <h1 class="title">When a steady hand <em>costs you</em> millions.</h1>
+  <p class="subtitle">A seventeen-year look at how the City of Troy, Michigan pension fund performed against the broad U.S. stock market.</p>
+  <div class="byline">Source data · Annual Comprehensive Financial Reports of the City of Troy</div>
+</header>
+
+<p class="lead">Troy's pension fund is among the best-funded municipal plans in Michigan, with a fiduciary net position covering more than 150% of obligations as of fiscal year 2025. It earned that distinction not by chasing returns, but by holding a diversified mix of stocks, bonds, real estate, and private equity. The cost of that prudence shows up clearly when you set its track record next to a 100% S&amp;P 500 portfolio.</p>
+
+<div class="stats">
+  <div class="stat">
+    <div class="stat-label">Troy pension<br>Annualized return</div>
+    <div class="stat-value">7.03<span style="font-size: 22px;">%</span></div>
+    <div class="stat-sub">FY2008–FY2025</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">S&amp;P 500 Total Return<br>Annualized return</div>
+    <div class="stat-value">9.23<span style="font-size: 22px;">%</span></div>
+    <div class="stat-sub">FY2008–FY2025</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Annual<br>Performance gap</div>
+    <div class="stat-value neg">−2.20<span style="font-size: 22px;">%</span></div>
+    <div class="stat-sub">Per year, compounded</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Plan funded ratio<br>FY2025</div>
+    <div class="stat-value">152<span style="font-size: 22px;">%</span></div>
+    <div class="stat-sub">Net pension asset: $81.0M</div>
+  </div>
+</div>
+
+<section>
+  <h2><span class="num">§ 01</span>Annual returns, side by side</h2>
+  <div class="section-rule"></div>
+  <p class="intro">Each bar shows the Troy pension's annual money-weighted return; the dashed line tracks the S&amp;P 500 Total Return Index over the matching July-to-June fiscal year. The story is consistent: Troy lags during bull markets and falls less during bear markets.</p>
+
+  <div class="chart-wrap">
+    <div class="chart-title">Annual investment returns, FY2008 – FY2025</div>
+    <div class="chart-subtitle">Fiscal years ending June 30 · Percentage points</div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-mark troy"></span>Troy pension fund</span>
+      <span class="legend-item"><span class="legend-mark sp"></span>S&amp;P 500 Total Return</span>
+    </div>
+    <div class="chart-canvas-wrap">
+      <canvas id="annualChart" role="img" aria-label="Bar and line chart showing Troy pension annual returns versus S&P 500 from FY2008 to FY2025. Troy outperformed during the 2008 and 2009 financial crisis years, then trailed the S&P in every subsequent year.">Annual returns chart</canvas>
+    </div>
+    <div class="chart-note">FY2011 omitted: the city's published ACFR for that year is image-scanned only, and the pension trust composition changed mid-period. FY2008–FY2013 figures are derived from the Statement of Changes in Fund Net Assets (investment earnings ÷ beginning trust assets). FY2014–FY2025 are the official GASB-67 money-weighted rates of return.</div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">§ 02</span>Growth of $1,000,000</h2>
+  <div class="section-rule"></div>
+  <p class="intro">Compounding magnifies small annual gaps. A million dollars invested at the start of FY2008 in Troy's pension portfolio would have grown to about <strong>$3.18 million</strong> by mid-2025. The same million invested entirely in the S&amp;P 500 — accepting all of its drawdowns and volatility — would have grown to <strong>$4.49 million</strong>.</p>
+
+  <div class="chart-wrap growth-wrap">
+    <div class="chart-title">Cumulative growth of $1,000,000</div>
+    <div class="chart-subtitle">Indexed to July 1, 2007 · End of fiscal year values</div>
+    <div class="legend">
+      <span class="legend-item"><span class="legend-mark troy"></span>Troy pension fund</span>
+      <span class="legend-item"><span class="legend-mark sp"></span>S&amp;P 500 Total Return</span>
+    </div>
+    <div class="chart-canvas-wrap">
+      <canvas id="growthChart" role="img" aria-label="Line chart showing cumulative growth of one million dollars invested in Troy pension versus S&P 500 from 2007 to 2025. Troy ended at $3.18 million, the S&P 500 at $4.49 million.">Growth chart</canvas>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">§ 03</span>The full record</h2>
+  <div class="section-rule"></div>
+  <p class="intro">Every fiscal year, every number, every gap.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Fiscal Year</th>
+          <th>Troy Pension</th>
+          <th>S&amp;P 500 TR</th>
+          <th>Difference</th>
+        </tr>
+      </thead>
+      <tbody id="dataTable"></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2><span class="num">§ 04</span>Reading the numbers</h2>
+  <div class="section-rule"></div>
+
+  <div class="callout">
+    The S&amp;P 500 is the <strong>wrong yardstick</strong> for a public pension. It's used here because it's the universally recognized benchmark, not because it would be a prudent allocation for a fiduciary obligation.
+  </div>
+
+  <p>A public pension fund's job is to make a fixed stream of benefit payments to retirees, on schedule, for decades. The Board of Trustees uses an assumed discount rate of 6.50% in Troy's case — meaning the plan is required to generate at least that much, on average, to remain fully funded. <strong style="font-weight:500;">Troy's 7.03% annualized return clears that bar.</strong></p>
+
+  <p>An all-equity portfolio would have generated higher returns, but at the cost of multi-year drawdowns that could force the city to make emergency cash contributions during recessions. The point of diversification is visible in the FY2008 and FY2009 columns above: while the S&amp;P 500 fell by a combined 35%, Troy's diversified portfolio fell about 17%. The plan kept paying benefits without the city writing a panic check.</p>
+
+  <div class="context-grid">
+    <div class="context-card">
+      <h3>What the plan actually holds</h3>
+      <p>As of FY2025, roughly 60% in U.S. and international equities, 26% in fixed income, plus smaller allocations to private equity, real estate, and cash. The Board of Trustees selects external investment managers; MissionSquare administers the related defined contribution accounts.</p>
+    </div>
+    <div class="context-card">
+      <h3>Why the plan is so well funded</h3>
+      <p>The defined benefit plan is closed to new entrants. Liabilities are shrinking as retirees draw benefits, while the asset pool continues to compound. Troy has not been required to make an employer pension contribution in seven of the last ten years.</p>
+    </div>
+    <div class="context-card">
+      <h3>A fairer benchmark</h3>
+      <p>A 60/40 portfolio (60% stocks, 40% bonds) returned roughly 7.5–8% annualized over this same window — far closer to Troy's 7.03% than the S&amp;P 500's 9.23%. The pension fund performed roughly in line with comparable diversified portfolios.</p>
+    </div>
+    <div class="context-card">
+      <h3>Who runs it</h3>
+      <p>The Employees Retirement System Board of Trustees — eight members including the City Manager and CFO, with appointees from City Council and the membership. The Board meets the second Wednesday of each month at Troy City Hall. Meetings are open to the public.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong style="color: var(--ink);">METHODOLOGY.</strong> Troy returns for FY2014–FY2025 are the annual money-weighted rates of return, net of investment expenses, as reported in the Schedule of Investment Returns under GASB Statement 67. For FY2008–FY2013 (predating GASB 67), returns are computed as Total Investment Earnings divided by Beginning Total Net Position of the Employees' Retirement System trust. For FY2008–FY2010 this trust held both pension and retiree healthcare assets in a single pool; for FY2012 onward it is pension-only. The FY2014 simple-method calculation yields 21.84% versus the GASB-67 official 22.23%, confirming the two methods are closely comparable.</p>
+  <p>S&amp;P 500 Total Return data sourced from the ^SP500TR index (price + reinvested dividends) measured from the last trading day in June of year X−1 to the last trading day in June of year X, matching Troy's fiscal-year cycle.</p>
+  <p>ACFRs are published under Generally Accepted Accounting Principles and audited annually by Yeo &amp; Yeo, CPAs. All source documents are available at <a href="https://troymi.gov/departments/city_manager/financial_services/financial_documents.php" target="_blank" rel="noopener">troymi.gov</a>.</p>
+  <p style="margin-top: 24px;">This page is an independent analysis. It is not affiliated with, endorsed by, or published by the City of Troy, Michigan or its Employees Retirement System Board of Trustees.</p>
+</footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script>
+const TROY = '#1f4068';
+const SP = '#c9a227';
+const INK = '#1a1814';
+const INK_FAINT = '#8a857a';
+const GRID = '#e8e1cf';
+
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = INK_FAINT;
+
+const annualLabels = PENSION_DATA.annual.map(d => 'FY' + String(d.fy).slice(2));
+const troyData = PENSION_DATA.annual.map(d => d.troy);
+const spData = PENSION_DATA.annual.map(d => d.sp500);
+
+new Chart(document.getElementById('annualChart'), {
+  data: {
+    labels: annualLabels,
+    datasets: [
+      {
+        type: 'bar',
+        label: 'Troy pension',
+        data: troyData,
+        backgroundColor: TROY,
+        borderColor: TROY,
+        borderWidth: 0,
+        order: 2,
+        barPercentage: 0.85,
+        categoryPercentage: 0.75
+      },
+      {
+        type: 'line',
+        label: 'S&P 500 TR',
+        data: spData,
+        borderColor: SP,
+        backgroundColor: SP,
+        borderWidth: 2.5,
+        borderDash: [5, 4],
+        pointRadius: 4,
+        pointBackgroundColor: SP,
+        pointBorderColor: SP,
+        pointStyle: 'rectRot',
+        pointHoverRadius: 6,
+        tension: 0,
+        fill: false,
+        order: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: INK,
+        titleFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+        bodyFont: { family: "'IBM Plex Mono', monospace", size: 12 },
+        padding: 12,
+        cornerRadius: 0,
+        callbacks: {
+          label: (ctx) => {
+            const sign = ctx.parsed.y > 0 ? '+' : '';
+            return ctx.dataset.label + ': ' + sign + ctx.parsed.y.toFixed(2) + '%';
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: (v) => (v > 0 ? '+' : '') + v + '%',
+          font: { family: "'IBM Plex Mono', monospace", size: 10 }
+        },
+        grid: { color: GRID, lineWidth: 1, drawTicks: false },
+        border: { display: false }
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 0,
+          font: { family: "'IBM Plex Mono', monospace", size: 10 }
+        },
+        grid: { display: false },
+        border: { color: INK, width: 1 }
+      }
+    }
+  }
+});
+
+const growthYears = PENSION_DATA.growth_of_1_dollar.troy.map(d => d.fy);
+const troyGrowth = PENSION_DATA.growth_of_1_dollar.troy.map(d => d.value * 1000000);
+const spGrowth = PENSION_DATA.growth_of_1_dollar.sp500.map(d => d.value * 1000000);
+
+const fmt = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+
+new Chart(document.getElementById('growthChart'), {
+  type: 'line',
+  data: {
+    labels: growthYears.map(y => "'" + String(y).slice(2)),
+    datasets: [
+      {
+        label: 'Troy pension',
+        data: troyGrowth,
+        borderColor: TROY,
+        backgroundColor: 'rgba(31, 64, 104, 0.06)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: TROY,
+        tension: 0.25,
+        fill: true
+      },
+      {
+        label: 'S&P 500 TR',
+        data: spGrowth,
+        borderColor: SP,
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        borderDash: [6, 4],
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: SP,
+        tension: 0.25
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: INK,
+        titleFont: { family: "'IBM Plex Mono', monospace", size: 11 },
+        bodyFont: { family: "'IBM Plex Mono', monospace", size: 12 },
+        padding: 12,
+        cornerRadius: 0,
+        callbacks: {
+          title: (items) => 'FY' + growthYears[items[0].dataIndex],
+          label: (ctx) => ctx.dataset.label + ': ' + fmt.format(ctx.parsed.y)
+        }
+      }
+    },
+    scales: {
+      y: {
+        ticks: {
+          callback: (v) => '$' + (v / 1000000).toFixed(1) + 'M',
+          font: { family: "'IBM Plex Mono', monospace", size: 10 }
+        },
+        grid: { color: GRID, lineWidth: 1, drawTicks: false },
+        border: { display: false }
+      },
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 0,
+          font: { family: "'IBM Plex Mono', monospace", size: 10 }
+        },
+        grid: { display: false },
+        border: { color: INK, width: 1 }
+      }
+    }
+  }
+});
+
+const tbody = document.getElementById('dataTable');
+let prevFy = null;
+PENSION_DATA.annual.forEach(row => {
+  if (prevFy === 2010 && row.fy === 2012) {
+    const gap = document.createElement('tr');
+    gap.className = 'gap-row';
+    gap.innerHTML = '<td colspan="4">FY2011 omitted — ACFR for that year was image-scanned and trust composition changed</td>';
+    tbody.appendChild(gap);
+  }
+  const tr = document.createElement('tr');
+  const sign = v => (v > 0 ? '+' : '') + v.toFixed(2) + '%';
+  const cls = v => v > 0 ? 'pos' : v < 0 ? 'neg' : '';
+  const diffCls = row.diff > 0 ? 'diff-pos pos' : row.diff < 0 ? 'diff-neg neg' : '';
+  tr.innerHTML =
+    '<td>FY' + row.fy + '</td>' +
+    '<td class="' + cls(row.troy) + '">' + sign(row.troy) + '</td>' +
+    '<td class="' + cls(row.sp500) + '">' + sign(row.sp500) + '</td>' +
+    '<td class="' + diffCls + '">' + Math.abs(row.diff).toFixed(2) + ' pp</td>';
+  tbody.appendChild(tr);
+  prevFy = row.fy;
+});
+</script>
+
+</body>
+</html>
